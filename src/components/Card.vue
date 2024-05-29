@@ -6,7 +6,7 @@
       <div class="characterCard__ContentWrapper flex flex-column justify-content-around p-3">
           <section>
               <h2 class="text-3xl m-0">{{ character.name }}</h2>
-              <p class="m-0"><img :src="character.status === 'Alive' ? '/images/green.png' : (character.status === 'Dead' ? '/images/red.jpg' : '/images/gray.png')" style="width: 10px; height: 10px; border-radius: 50%;" alt="status"> {{ character.status }} - {{ character.species }}</p>
+              <p class="m-0"><img :src="character.status === 'Alive' ? 'images/green.png' : (character.status === 'Dead' ? 'images/red.jpg' : 'images/gray.png')" style="width: 10px; height: 10px; border-radius: 50%;" alt="status"> {{ character.status }} - {{ character.species }}</p>
           </section>
           <section class="flex flex-column mt-2 mb-1">
               <p class="m-0 text-white-alpha-50">Last known location:</p>
