@@ -29,9 +29,11 @@
           ></my-card>
       </div>
       <div class="flex justify-content-center align-items-center my-3">
-        <img src="/images/prev.png" alt="prev page" @click="PagePrev()" class="cursor-pointer">
+        <img v-if="info.prev === null" src="/images/gray.png" alt="prev disabled" class="button-disabled">
+        <img v-else src="/images/prev.png" alt="prev page" @click="PagePrev()" class="cursor-pointer">
         <div class="text-8xl text-white mx-8">{{ currentPage }}</div>
-        <img src="/images/next.png" alt="next page" @click="PageNext()" class="cursor-pointer">
+        <img v-if="info.next === null" src="/images/gray.png" alt="next disabled" class="button-disabled">
+        <img v-else src="/images/next.png" alt="next page" @click="PageNext()" class="cursor-pointer">
       </div>
     </div>
   </main>
@@ -43,6 +45,8 @@ import { ref, reactive } from 'vue';
 import axios from 'axios';
 
 const characters = ref([]);
+
+const info = ref({});
 
 const currentPage = ref(1);
 
@@ -60,21 +64,13 @@ const onChangeSelect = (event) => {
 }
 
 const PageNext = () => {
-  if (currentPage.value === 42) {
-    currentPage.value = 1;
-  } else {
     currentPage.value += 1;
-  }
-  getCharacterNewPage();
+    getCharacterNewPage();
 }
 
 const PagePrev = () => {
-  if (currentPage.value === 1) {
-    currentPage.value = 42;
-  } else {
     currentPage.value -= 1;
-  }
-  getCharacterNewPage();
+    getCharacterNewPage();
 }
 
 const getCharacter = async () => {
@@ -90,6 +86,7 @@ const getCharacter = async () => {
       }
     });
     characters.value = response.data.results
+    info.value = response.data.info
   } catch (error) {
     if (error.response && error.response.status) {
       switch (error.response.status) {
@@ -114,6 +111,7 @@ const getCharacterNewPage = async () => {
       }
     });
     characters.value = response.data.results;
+    info.value = response.data.info
   } catch (error) {
     if (error.response && error.response.status) {
       switch (error.response.status) {
@@ -137,5 +135,9 @@ const getCharacterNewPage = async () => {
 img {
   top: 4px;
   right: 4px;
+}
+.button-disabled {
+  width: 128px;
+  border-radius: 50%;
 }
 </style>
